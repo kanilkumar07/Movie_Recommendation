@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+All Users
+</title>
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+padding:30px;
+color:white;
+}
+
+h1{
+color:red;
+margin-bottom:30px;
+}
+
+.users-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.user-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+transition:0.3s;
+}
+
+.user-card:hover{
+transform:translateY(-10px);
+box-shadow:0 10px 20px rgba(255,0,0,0.4);
+}
+
+.user-card h2{
+margin-bottom:10px;
+}
+
+.btn{
+display:inline-block;
+margin-top:15px;
+padding:10px 15px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+👥 Manage Users
+</h1>
+
+<div class="users-grid">
+
+{% for user in users %}
+
+<div class="user-card">
+
+<h2>
+{{ user[1] }}
+</h2>
+
+<p>
+📧 {{ user[2] }}
+</p>
+
+<p>
+🎭 Role: {{ user[4] }}
+</p>
+
+<a
+href="/delete_user/{{ user[0] }}"
+class="btn">
+
+Delete User
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+
+</html>

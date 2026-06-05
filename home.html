@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MovieAI</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+width:100%;
+background:#000000d9;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+position:fixed;
+top:0;
+left:0;
+z-index:1000;
+backdrop-filter:blur(10px);
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+color:red;
+text-shadow:0 0 15px red;
+}
+
+.menu{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:17px;
+transition:0.4s;
+position:relative;
+}
+
+.menu a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-5px;
+width:0%;
+height:2px;
+background:red;
+transition:0.4s;
+}
+
+.menu a:hover::after{
+width:100%;
+}
+
+.menu a:hover{
+color:red;
+}
+
+.menu-toggle{
+display:none;
+font-size:35px;
+cursor:pointer;
+color:white;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+width:100%;
+height:100vh;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+padding:20px;
+}
+
+.slider{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-2;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+animation:slider 24s infinite;
+}
+
+.slide:nth-child(1){
+background-image:url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1974');
+animation-delay:0s;
+}
+
+.slide:nth-child(2){
+background-image:url('https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=2070');
+animation-delay:6s;
+}
+
+.slide:nth-child(3){
+background-image:url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2070');
+animation-delay:12s;
+}
+
+.slide:nth-child(4){
+background-image:url('https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?q=80&w=2070');
+animation-delay:18s;
+}
+
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.9));
+z-index:-1;
+}
+
+@keyframes slider{
+
+0%{
+opacity:0;
+transform:scale(1);
+}
+
+10%{
+opacity:1;
+}
+
+25%{
+opacity:1;
+transform:scale(1.08);
+}
+
+35%{
+opacity:0;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+.hero-content{
+text-align:center;
+max-width:850px;
+}
+
+.hero-content h1{
+font-size:80px;
+margin-bottom:20px;
+}
+
+.hero-content p{
+font-size:22px;
+color:#ddd;
+margin-bottom:35px;
+line-height:1.8;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.search-box input{
+width:100%;
+max-width:550px;
+padding:18px;
+border:none;
+border-radius:12px;
+font-size:18px;
+outline:none;
+}
+
+.search-box button{
+padding:18px 35px;
+border:none;
+background:red;
+color:white;
+font-size:18px;
+border-radius:12px;
+cursor:pointer;
+transition:0.4s;
+}
+
+.search-box button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px red;
+}
+
+/* ================= SECTION ================= */
+
+.section{
+padding:120px 40px 80px;
+}
+
+.section-title{
+font-size:45px;
+margin-bottom:40px;
+color:red;
+text-align:center;
+}
+
+/* ================= SLIDER ================= */
+
+.slider-wrapper{
+position:relative;
+display:flex;
+align-items:center;
+}
+
+.movie-slider{
+display:flex;
+gap:25px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding:20px;
+scrollbar-width:none;
+}
+
+.movie-slider::-webkit-scrollbar{
+display:none;
+}
+
+/* ================= CARD ================= */
+
+.card{
+min-width:260px;
+background:#0f172a;
+border-radius:20px;
+overflow:hidden;
+transition:0.5s;
+flex-shrink:0;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 25px red;
+}
+
+.card img{
+width:100%;
+height:350px;
+object-fit:cover;
+transition:0.5s;
+}
+
+.card:hover img{
+transform:scale(1.08);
+}
+
+.card-content{
+padding:20px;
+}
+
+.card-content h3{
+font-size:24px;
+margin-bottom:12px;
+}
+
+.card-content p{
+color:#ccc;
+line-height:1.7;
+}
+
+/* ================= BUTTON ================= */
+
+.slide-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.8);
+color:white;
+border:none;
+font-size:35px;
+width:60px;
+height:60px;
+cursor:pointer;
+z-index:100;
+border-radius:50%;
+transition:0.4s;
+}
+
+.slide-btn:hover{
+background:red;
+}
+
+.left{
+left:-10px;
+}
+
+.right{
+right:-10px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+background:black;
+padding:60px 20px;
+text-align:center;
+}
+
+.footer h2{
+font-size:35px;
+color:red;
+margin-bottom:20px;
+}
+
+.footer p{
+color:#aaa;
+line-height:1.8;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+.menu-toggle{
+display:block;
+}
+
+.menu{
+display:none;
+position:absolute;
+top:75px;
+left:0;
+width:100%;
+background:#000;
+flex-direction:column;
+padding:20px 0;
+text-align:center;
+}
+
+.menu.active{
+display:flex;
+}
+
+.hero{
+padding-top:120px;
+height:auto;
+min-height:100vh;
+}
+
+.hero-content h1{
+font-size:42px;
+}
+
+.hero-content p{
+font-size:16px;
+}
+
+.search-box{
+flex-direction:column;
+}
+
+.search-box button{
+width:100%;
+}
+
+.card{
+min-width:220px;
+}
+
+.slide-btn{
+width:45px;
+height:45px;
+font-size:25px;
+}
+
+.section{
+padding:100px 20px 60px;
+}
+
+}
+
+.footer{
+
+    background:black;
+
+    padding:60px 50px;
+}
+
+.footer-container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:30px;
+}
+
+.footer-box{
+
+    width:250px;
+}
+
+.footer-box h3{
+
+    color:red;
+
+    margin-bottom:20px;
+}
+
+.footer-box p{
+
+    color:#aaa;
+
+    line-height:1.8;
+}
+
+.footer-box a{
+
+    display:block;
+
+    color:#aaa;
+
+    text-decoration:none;
+
+    margin-bottom:10px;
+
+    transition:0.3s;
+}
+
+.footer-box a:hover{
+
+    color:red;
+}
+
+.copy{
+
+    text-align:center;
+
+    margin-top:40px;
+
+    color:#777;
+}
+
+.nav-buttons{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.login-btn{
+padding:10px 22px;
+background:transparent;
+border:2px solid red;
+color:white;
+text-decoration:none;
+border-radius:30px;
+font-size:16px;
+transition:0.3s;
+}
+
+.login-btn:hover{
+background:none;
+transform:scale(1.05);
+}
+
+.register-btn{
+padding:10px 22px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:30px;
+font-size:16px;
+transition:0.3s;
+}
+
+.register-btn:hover{
+background:none;
+transform:scale(1.05);
+}
+
+.movie-card{
+width:220px;
+min-width:220px;
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+color:white;
+flex-shrink:0;
+}
+
+.movie-poster{
+width:100%;
+height:320px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.movie-card h2{
+font-size:20px;
+margin-top:10px;
+}
+
+.movie-card p{
+margin-top:5px;
+font-size:15px;
+}
+
+.movie-card a{
+display:inline-block;
+margin-top:10px;
+padding:8px 12px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+
+.movie-card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 10px 25px rgba(255,0,0,0.5);
+}
+
+.movie-card:hover .movie-poster{
+transform:scale(1.05);
+}
+
+.movie-poster{
+transition:0.3s;
+}
+
+.trailer-btn{
+    background:#007bff;   /* Blue */
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s ease;
+    font-weight:600;
+}
+
+.trailer-btn:hover{
+    background:red;      /* Hover Red */
+    transform:scale(1.05);
+}
+
+.card-content{
+    text-align:center;
+}
+
+.trailer-btn{
+    display:inline-block;
+    background:#007bff;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s ease;
+}
+
+.trailer-btn:hover{
+    background:red;
+    transform:scale(1.05);
+}
+
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+    margin:15px 0;
+}
+
+.progress{
+    width:70%; /* Progress Percentage */
+    height:100%;
+    background:#00ff66;
+    border-radius:10px;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+<div class="logo">
+MovieAI
+</div>
+
+<div class="menu-toggle"
+onclick="toggleMenu()">
+☰
+</div>
+
+<div class="menu" id="menu">
+
+<a href="#home">Home</a>
+<a href="#trending">Trending</a>
+<a href="#bollywood">Bollywood</a>
+<a href="#hollywood">Hollywood</a>
+<a href="#webseries">Web Series</a>
+<a href="#anime">Anime</a>
+<a href ="/chatbot"> ChatBot </a>
+<!-- <a href="/history">Recently Watched</a> -->
+<!-- <a href="/login" class="login-btn">Login</a> -->
+<a href="/logout" class="register-btn">Logout</a>
+
+</div>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<div class="hero" id="home">
+
+<div class="slider">
+
+<div class="slide"></div>
+<div class="slide"></div>
+<div class="slide"></div>
+<div class="slide"></div>
+
+</div>
+
+<div class="overlay"></div>
+
+<div class="hero-content">
+
+<h1>
+AI Movie Recommendation
+</h1>
+
+<p>
+Search your favorite movies and discover trending movies instantly.
+</p>
+
+<form action="/recommend" method="POST">
+
+<div class="search-box">
+
+<input
+type="text"
+name="movie"
+placeholder="Search Movies Like Interstellar, Avengers...">
+
+<button>
+Search
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- ================= RECENTLY WATCHED ================= -->
+
+<section class="section" id="">
+
+<h2 class="section-title">
+🎬 Recently Watched Movies
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('bollywood-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="bollywood-slider">
+
+<div class="card"><img src="static\images\kalki.jpg"><div class="card-content"><h3>Kalki</h3><p>Futurastic Action movie.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/kalki-2898-ad-2024-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\pushpa.jpg"><div class="card-content"><h3>Pushpa 2</h3><p>Action drama movie.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/pushpa-the-rule-part-2-2024-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\merai.jpg"><div class="card-content"><h3>Merai</h3><p>Spy action thriller.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/mirai-2025-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\leveling.jpg"><div class="card-content"><h3>Solo Leveling</h3><p>Epic Indian action.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://watchanimeworld.net/episode/solo-leveling-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\kgf.jpg"><div class="card-content"><h3>KGF 2</h3><p>Crime thriller movie.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/k-g-f-chapter-1-2018-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\hanuman1.jpg"><div class="card-content"><h3>Hanuman</h3><p>God thriller movie.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/the-legend-of-hanuman-2021-season-1-hotstar-specials-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\hanuman.jpg"><div class="card-content"><h3>Legend ofHanuman</h3><p>Mystery thriller.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/the-legend-of-hanuman-2021-season-1-hotstar-specials-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\chava.jpg"><div class="card-content"><h3>Chhava</h3><p>Historical drama.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/shivrayancha-chhava-2024-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\bahubali.jpg"><div class="card-content"><h3>Bahubali</h3><p>Historical  emotional movie.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/baahubali-2-the-conclusion-2017-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+<div class="card"><img src="static\images\transformer.jpg"><div class="card-content"><h3>Transformer</h3><p>Sci-fi  spy action.</p><!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div><a href="https://prmovies.courses/transformers-dark-of-the-moon-2011-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Again
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('bollywood-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= TRENDING MOVIES ================= -->
+
+<section class="section" id="trending">
+
+<h2 class="section-title">
+🔥 Trending Movies
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('trending-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="trending-slider">
+
+{% for movie in movies %}
+
+<div class="movie-card">
+
+<img
+src="{{ movie[2] }}"
+class="movie-poster">
+
+<h2>
+{{ movie[1] }}
+</h2>
+
+<p>
+⭐ {{ movie[3] }}
+</p>
+
+<p>
+📅 {{ movie[4] }}
+</p>
+
+<a
+href="{{ movie[5] }}"
+target="_blank">
+
+Watch Trailer
+
+</a>
+
+</div>
+
+{% endfor %}
+
+<div class="card"><img src="static\images\dhurandhar.jpg"><div class="card-content"><h3>Dhurandhar</h3><p>The-Action-movie</p><a href="https://prmovies.courses/dhurandhar-the-revenge-2026-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\intersteller.jpeg"><div class="card-content"><h3>Interstellar</h3><p>Sci-fi masterpiece.</p><a href="https://prmovies.courses/interstellar-wars-2016-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\endgame.jpeg"><div class="card-content"><h3>Avengers Endgame</h3><p>Marvel battle movie.</p><a href="https://prmovies.courses/avengers-endgame-2019-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\jokar.jpeg"><div class="card-content"><h3>Joker</h3><p>Dark thriller film.</p><a href="https://prmovies.courses/joker-2019-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\inception.jpeg"><div class="card-content"><h3>Inception</h3><p>Dream thriller movie.</p><a href="https://prmovies.courses/inception-2010-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\johnwick.jpeg"><div class="card-content"><h3>John Wick</h3><p>Action assassin movie.</p><a href="https://prmovies.courses/john-wick-chapter-4-2023-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\darkknight.jpeg"><div class="card-content"><h3>The Dark Knight</h3><p>Batman vs Joker.</p><a href="https://prmovies.courses/the-dark-knight-2008-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\avtar.jpeg"><div class="card-content"><h3>Avatar</h3><p>Alien fantasy movie.</p><a href="https://prmovies.courses/avatar-fire-and-ash-2025-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\spiderman.jpeg"><div class="card-content"><h3>Spider-Man</h3><p>Marvel superhero movie.</p><a href="https://prmovies.courses/the-amazing-spider-man-2012-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\oppenheimer.jpeg"><div class="card-content"><h3>Oppenheimer</h3><p>Atomic bomb story.</p><a href="https://prmovies.courses/oppenheimer-2023-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\matrix.jpeg"><div class="card-content"><h3>The Matrix</h3><p>Cyber thriller movie.</p><a href="https://prmovies.courses/the-matrix-1999-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('trending-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+
+
+
+
+
+<!-- ================= BOLLYWOOD MOVIES ================= -->
+
+<section class="section" id="bollywood">
+
+<h2 class="section-title">
+🎬 Bollywood Movies
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('bollywood-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="bollywood-slider">
+
+<div class="card"><img src="static\images\3idoits.jpeg"><div class="card-content"><h3>3 Idiots</h3><p>Comedy friendship movie.</p><a href="https://prmovies.courses/3-idiots-2009-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\dangal.jpeg"><div class="card-content"><h3>Dangal</h3><p>Sports drama movie.</p><a href="https://prmovies.courses/dangal-2016-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\pathan.jpeg"><div class="card-content"><h3>Pathaan</h3><p>Spy action thriller.</p><a href="https://prmovies.courses/pathaan-2023-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\rrr.jpeg"><div class="card-content"><h3>RRR</h3><p>Epic Indian action.</p><a href="https://prmovies.courses/rrr-2022-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\animal.jpeg"><div class="card-content"><h3>Animal</h3><p>Crime thriller movie.</p><a href="https://prmovies.courses/animal-2023-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\jawan.jpeg"><div class="card-content"><h3>Jawan</h3><p>Action thriller movie.</p><a href="https://prmovies.courses/jawan-2023-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\drishyam.jpeg"><div class="card-content"><h3>Drishyam</h3><p>Mystery thriller.</p><a href="https://prmovies.courses/drishyam-2015-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\pk.jpeg"><div class="card-content"><h3>PK</h3><p>Funny social drama.</p><a href="https://prmovies.courses/pk-2014-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\shershaah.jpeg"><div class="card-content"><h3>Shershaah</h3><p>Army emotional movie.</p><a href="https://prmovies.courses/shershaah-2021-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\war.jpeg"><div class="card-content"><h3>War</h3><p>Indian spy action.</p><a href="https://prmovies.courses/war-2-2025-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('bollywood-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<!-- ================= HOLLYWOOD MOVIES ================= -->
+
+<section class="section" id="hollywood">
+
+<h2 class="section-title">
+🎥 Hollywood Movies
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('hollywood-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="hollywood-slider">
+
+<div class="card"><img src="static\images\fightclub.jpeg"><div class="card-content"><h3>Fight Club</h3><p>Psychological thriller.</p><a href="https://prmovies.courses/fight-club-1999-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\parasyte.jpeg"><div class="card-content"><h3>Parasite</h3><p>Oscar winning thriller.</p><a href="https://prmovies.courses/parasite-2019-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\fast&furious.jpeg"><div class="card-content"><h3>Fast Furious 7</h3><p>Racing action movie.</p><a href="https://prmovies.courses/fast-furious-7-2015-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\extraction.jpeg"><div class="card-content"><h3>Extraction</h3><p>Rescue mission thriller.</p><a href="https://prmovies.courses/extraction-2020-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\blackpather.jpeg"><div class="card-content"><h3>Black Panther</h3><p>Marvel action movie.</p><a href="https://prmovies.courses/black-panther-2018-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\gladiator.jpeg"><div class="card-content"><h3>Gladiator</h3><p>Roman empire war drama.</p><a href="https://prmovies.courses/gladiator-2000-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\infinitywar.jpeg"><div class="card-content"><h3>Infinity War</h3><p>Marvel universe war.</p><a href="https://prmovies.courses/infinity-war-2018-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\venom.jpeg"><div class="card-content"><h3>Venom</h3><p>Dark antihero movie.</p><a href="https://prmovies.courses/venom-2018-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\dr.jpeg"><div class="card-content"><h3>Doctor Strange</h3><p>Magic multiverse movie.</p><a href="https://prmovies.courses/doctor-strange-2016-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\spiderman.jpeg"><div class="card-content"><h3>Spider-Man</h3><p>Marvel superhero movie.</p><a href="https://prmovies.courses/spider-man-2002-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('hollywood-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<!-- ================= WEB SERIES ================= -->
+
+<section class="section" id="webseries">
+
+<h2 class="section-title">
+📺 Web Series
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('webseries-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="webseries-slider">
+
+<div class="card"><img src="static\images\moneyheist.jpeg"><div class="card-content"><h3>Money Heist</h3><p>Robbery thriller series.</p><a href="https://prmovies.courses/money-heist-2017-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\stranger.jpeg"><div class="card-content"><h3>Stranger Things</h3><p>Sci-fi mystery series.</p><a href="https://prmovies.courses/stranger-things-2025-season-5-part-2-hindi-dubbed-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\breakingbad.jpeg"><div class="card-content"><h3>Breaking Bad</h3><p>Crime drama series.</p><a href="https://prmovies.courses/breaking-bad-2008-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\squidgame.jpeg"><div class="card-content"><h3>Squid Game</h3><p>Survival thriller series.</p><a href="https://prmovies.courses/squid-game-2021-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\loki.jpeg"><div class="card-content"><h3>Loki</h3><p>Marvel multiverse series.</p><a href="https://prmovies.courses/loki-2021-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\dark.jpeg"><div class="card-content"><h3>Dark</h3><p>Time travel mystery.</p><a href="https://prmovies.courses/dark-2017-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\boys.jpeg"><div class="card-content"><h3>The Boys</h3><p>Dark superhero series.</p><a href="https://prmovies.courses/the-boys-2019-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\peaky.jpeg"><div class="card-content"><h3>Peaky Blinders</h3><p>Gangster drama series.</p><a href="https://prmovies.courses/peaky-blinders-2013-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\wednesday.jpeg"><div class="card-content"><h3>Wednesday</h3><p>Dark comedy mystery.</p><a href="https://prmovies.courses/wednesday-2022-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\watcher.jpeg"><div class="card-content"><h3>The Witcher</h3><p>Fantasy action series.</p><a href="https://prmovies.courses/the-witcher-2019-Watch-online-full-movie/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('webseries-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= ANIME ================= -->
+
+<section class="section" id="anime">
+
+<h2 class="section-title">
+🎬 Anime....
+</h2>
+
+<div class="slider-wrapper">
+
+<button class="slide-btn left"
+onclick="scrollMovies('anime-slider', -1000)">
+❮
+</button>
+
+<div class="movie-slider" id="anime-slider">
+
+<div class="card"><img src="static\images\solo.jpg"><div class="card-content"><h3>Solo Leveling</h3><p>Action , fantasy.</p><a href="https://watchanimeworld.net/episode/solo-leveling-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\demon.jpg"><div class="card-content"><h3>Demon Slayer</h3><p>Action , adventire.</p><a href="https://watchanimeworld.net/movies/demon-slayer-kimetsu-no-yaiba-infinity-castle/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\jujustu.jpg"><div class="card-content"><h3>Jujutsu Kaisen</h3><p>Dark fantasy, Action.</p><a href="https://watchanimeworld.net/episode/jujutsu-kaisen-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\one peace.jpg"><div class="card-content"><h3>One Piece</h3><p>Adventure , Action.</p><a href="https://watchanimeworld.net/series/one-piece/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\attack.jpg"><div class="card-content"><h3>Attack of Titan</h3><p>Dark fantasy thriller.</p><a href="https://watchanimeworld.net/series/attack-on-titan/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\chainsawman.jpg"><div class="card-content"><h3>Chainsaw Man</h3><p>Action , Horror .</p><a href="https://watchanimeworld.net/series/chainsaw-man/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\Apothecary.jpg"><div class="card-content"><h3>The Apothecary Diaries</h3><p>Mystery ,Historical .</p><a href="https://watchanimeworld.net/episode/the-apothecary-diaries-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\frieren.jpg"><div class="card-content"><h3>Frieren</h3><p>Fantasy Adventure.</p><a href="https://watchanimeworld.net/series/frieren-beyond-journeys-end/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\blue.jpg"><div class="card-content"><h3>Blue Lock</h3><p>Sports (Football).</p><a href="https://watchanimeworld.net/episode/blue-lock-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+<div class="card"><img src="static\images\Academia.jpg"><div class="card-content"><h3>My Hero Academia</h3><p>Superhero action.</p><a href="https://watchanimeworld.net/episode/my-hero-academia-2x13/" target="_blank" class="trailer-btn">
+    ▶ Watch Now
+</a></div></div>
+
+</div>
+
+<button class="slide-btn right"
+onclick="scrollMovies('anime-slider', 1000)">
+❯
+</button>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-container">
+
+<div class="footer-box">
+
+<h3>About</h3>
+
+<p>
+
+AI-powered movie recommendation website using Flask and Machine Learning.
+
+</p>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Quick Links</h3>
+
+<a href="/">Home</a>
+
+<a href="#trending">Trending</a>
+
+<a href="#hollywood">Hollywood</a>
+
+<a href="#webseries">Web Series</a>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Genres</h3>
+
+<a href="#">Action</a>
+
+<a href="#">Sci-Fi</a>
+
+<a href="#">Adventure</a>
+
+<a href="#">Thriller</a>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Contact</h3>
+
+<p>Email: kanilkumar8419@gmail.com</p>
+
+<p>Phone: +91 7643013816</p>
+
+</div>
+
+</div>
+
+<div class="copy">
+
+© 2026 MovieAI | All Rights Reserved
+
+</div>
+
+</footer>
+
+
+</body>
+
+<script>
+
+function toggleMenu(){
+
+document
+.getElementById("menu")
+.classList.toggle("active");
+
+}
+
+function scrollMovies(id, amount){
+
+document
+.getElementById(id)
+.scrollLeft += amount;
+
+}
+
+</script>
+
+</html>

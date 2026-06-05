@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+All Movies
+</title>
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+padding:30px;
+color:white;
+}
+
+h1{
+color:red;
+margin-bottom:30px;
+}
+
+.movies-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.movie-card{
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+}
+
+.movie-card img{
+width:100%;
+height:350px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.movie-card h2{
+margin-top:10px;
+}
+
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 15px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+🎬 Manage Movies
+</h1>
+
+<div class="movies-grid">
+
+{% for movie in movies %}
+
+<div class="movie-card">
+
+<img src="{{ movie[2] }}">
+
+<h2>
+{{ movie[1] }}
+</h2>
+
+<p>
+⭐ {{ movie[3] }}
+</p>
+
+<p>
+📅 {{ movie[4] }}
+</p>
+
+<a
+href="/edit_movie/{{ movie[0] }}"
+class="btn">
+
+Edit
+
+</a>
+
+<a
+href="/delete_movie/{{ movie[0] }}"
+class="btn">
+
+Delete
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+
+</html>
