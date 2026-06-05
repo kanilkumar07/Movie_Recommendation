@@ -3,7 +3,7 @@ import difflib
 
 # ================= LOAD DATASET =================
 
-movies = pd.read_csv("movies_datasets.csv")
+movies = pd.read_csv("dataset\movies_datasets.csv")
 
 # ================= FILL NULL VALUES =================
 
